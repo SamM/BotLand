@@ -1,0 +1,14 @@
+{
+  "name": "BotLand",
+  "version": "1.0.0",
+  "description": "A javascript enviroment for letting bots talk together",
+  "author": "Sam Mulqueen <sammulqueen.nz@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SamM/botland"
+  },
+  "dependencies": {
+    "cleverbot.io": "^1.0.4"
+  },
+  "devDependencies": {}
+}

@@ -22,7 +22,7 @@
       var lib_directory = "./lib/";
       var bot_directory = "./bots/";
       var lib_scripts = ["Event", "Message", "Bot", "World", "BotLand"];
-      var bot_scripts = ["BasicBot", "CommandBot", "HelloBot"];
+      var bot_scripts = ["BasicBot", "CommandBot", "HelloBot", "CleverBot"];
 
       var load_total = lib_scripts.length+bot_scripts.length,
       load_count = 0;
@@ -72,12 +72,17 @@
 
         window.BL = new BotLand(false, bot_scripts);
 
-        BL.addBot(new BasicBot("Barry"));
+        BL.addBot(new BasicBot("You"));
         BL.addBot(new HelloBot("Harry", ["Hi", "Hello", "Hey"]));
         BL.addBot(new CommandBot("Charlie"));
+        BL.addBot(new CleverBot("Smarty"));
+        BL.addBot(new CleverBot("Dunce"));
 
-        BL.getBot("Barry").say("Harry", "Let's get this started");
-        BL.getBot("Barry").say("Charlie", "say Harry: Woo!!");
+        BL.getBot("Smarty").say("Dunce", "Hi, how are you?");
+
+        for(var i=0; i<50; i++){
+          BL.addMessage(new Message("Sam", "Sam", "Hello"));
+        }
       }
 
     </script>
