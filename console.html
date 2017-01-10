@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <title>Botland Console</title>
+    <script type="text/javascript">
+      function addScript(source, id, parent){
+        var script = document.createElement("script");
+        if(id) script.id = id;
+        script.src = source;
+        if(parent){
+          parent.appendChild(script);
+        }else{
+          document.head.appendChild(script);
+        }
+        return script;
+      }
+
+      //
+      // Import lib and bot scripts
+      //
+
+      var file_type = ".js";
+      var lib_directory = "./lib/";
+      var bot_directory = "./bots/";
+      var lib_scripts = ["Event", "Message", "Bot", "World", "BotLand"];
+      var bot_scripts = ["BasicBot", "CommandBot", "HelloBot"];
+
+      var load_total = lib_scripts.length+bot_scripts.length,
+      load_count = 0;
+
+      lib_scripts.forEach(function(file){
+        var script = addScript(lib_directory+file+file_type, file);
+        script.onload = function(){
+          load_count++;
+          if(load_count == load_total && typeof onLoad == "function"){
+            onLoad();
+          }
+        }
+      });
+
+      bot_scripts.forEach(function(file){
+        var script = addScript(bot_directory+file+file_type, file);
+        script.onload = function(){
+          load_count++;
+          if(load_count == load_total && typeof onLoad == "function"){
+            onLoad();
+          }
+        }
+      });
+
+      //
+      // Once all of the scripts and other imported files are loaded
+      //
+
+      function onLoad(){
+        console.log("load");
+
+        //
+        // Check for lib and bot variables
+        //
+
+        lib_scripts.forEach(function(name){
+          if(typeof window[name] == "undefined"){
+            console.error("Missing "+name+" class");
+          }
+        });
+
+        bot_scripts.forEach(function(name){
+          if(typeof window[name] == "undefined"){
+            console.error("Missing "+name+" function");
+          }
+        });
+
+        window.BL = new BotLand(false, bot_scripts);
+
+        BL.addBot(new BasicBot("Barry"));
+        BL.addBot(new HelloBot("Harry", ["Hi", "Hello", "Hey"]));
+        BL.addBot(new CommandBot("Charlie"));
+
+        BL.getBot("Barry").say("Harry", "Let's get this started");
+        BL.getBot("Barry").say("Charlie", "say Harry: Woo!!");
+      }
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
